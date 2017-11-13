@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+          <head>
+        <meta charset="utf-8">
+            
+            <title>
+                Continuation passing style in C++ | Hexo
+            </title>
+            <meta content="width=device-width, initial-scale=1" name="viewport">
+            <meta name="theme-color" content="#4184f3">
+            
+            
+            <link href="/favicon.ico" rel="icon"/>
+            
+
+            <link rel="stylesheet" href="/css/highlight.light.css">
+            <link rel="stylesheet" href="/css/prism-customize.css">
+            <link rel="stylesheet" href="/css/nav-icon.css">
+            <link rel="stylesheet" href="/css/waves.min.css">
+            <link rel="stylesheet" href="/css/jquery.tocify.css">
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/nav-indicator.css">
+            
+  
+
+  
+            </meta>
+        </meta>
+    </head>
+
+    <body>
+        <header>
+            <!-- cover image or sth. -->
+        </header>
+        <div id="main" class="m-scene">
+            
+<div class="nav-wrapper">
+
+    <div class="container">
+        <nav>
+            <div class="logo wave">
+                <a href="/" id="logo">
+                    Hexo
+                </a>
+            </div>
+            <div class="nav-toggle-icon" >
+                <div class="material-hamburger">
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                </div>
+            </div>
+            <div class="menu-wrapper">
+                <div class="nav-indicator">
+                </div>
+                <ul class="menus">
+                    
+                     
+                        <li>
+                            <a class="wave " href="/">
+                                Home
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/archives">
+                                Archive
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/about">
+                                About
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave no-smoothstate" href="/atom.xml">
+                                RSS
+                            </a>
+                        </li>
+                     
+                    
+                   
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+            <div class="container content">
+                <div class="scene_element scene_element--fadein">
+                    <div class="row">
+    <div class="main">
+        <article>
+          
+          <header class="post-header">
+          
+          </header>
+          <h1 class="post-title">Continuation passing style in C++</h1>
+
+          <section class="post-info">
+            <span class="post-date">2016/07/08</span>
+            
+            
+          </section>
+
+          <section class="post-content">
+            <p>写过js都知道<a href="https://en.wikipedia.org/wiki/Continuation-passing_style" target="_blank" rel="external">CPS</a>是一个什么鬼东西，将后继续逻辑传给一个<a href="https://en.wikipedia.org/wiki/Continuation" target="_blank" rel="external">Continuation</a>(后续函数)<br>假设我们有一个<code>show</code>函数，仅仅打印一句话。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto show = [](const auto&amp; v)&#123;std::cout &lt;&lt; v &lt;&lt; &quot;\n&quot;;&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>通常做法是创建一个函数，存储、修改然后返回值，然后把这些值传到下一个函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auto make_one = []()&#123;return 1;&#125;;</span><br><span class="line"></span><br><span class="line">//prints 1</span><br><span class="line">show(make_one());</span><br></pre></td></tr></table></figure>
+<p>而在CPS中，函数有一个参数处理返回值.这就是Continuation后续性,通常命令为<strong>K</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auto one_cps = [](auto&amp;&amp; k)&#123;return k(1);&#125;;</span><br><span class="line"></span><br><span class="line">//Also prints 1</span><br><span class="line">one_cps(show);</span><br></pre></td></tr></table></figure>
+<p><code>one_cps</code>将一个函数当做它的参数,而将通常作为返回值的作为此函数的参数。这个函数通常是一个lambda.<br>为了可以接收所有类型的函数.</p>
+<p>其他的一些函数可以以一种更直接的方式转换成为CPS风格:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">auto add_cps = []&lt;class T&gt;(const T&amp; lhs, const T&amp; rhs, auto&amp;&amp; k)</span><br><span class="line">&#123;</span><br><span class="line">	return k(lhs + rhs);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">auto sub_cps = []&lt;class T&gt;(const T&amp; lhs, const T&amp; rhs, auto&amp;&amp; k)</span><br><span class="line">&#123;</span><br><span class="line">	return k(lhs - rhs);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">auto mul_cps = []&lt;class T&gt;(const T&amp; lhs, const T&amp; rhs, auto&amp;&amp; k)</span><br><span class="line">&#123;</span><br><span class="line">	return k(lhs * rhs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">auto div_cps = []&lt;class T&gt;(const T&amp; lhs, const T&amp; rhs, auto&amp;&amp; k)</span><br><span class="line">&#123;</span><br><span class="line">	return k(lhs/rhs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">auto eq_cps = []&lt;class T&gt;(const T&amp; lhs, const T&amp; rhs, auto&amp;&amp; k)</span><br><span class="line">&#123;</span><br><span class="line">    return k(lhs==rhs);</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">// etc...</span><br><span class="line"> </span><br><span class="line">add_cps(1,2,show); // prints 3</span><br><span class="line">times_cps(3,4,show); // prints 12</span><br></pre></td></tr></table></figure></p>
+<p>当混合了其他的CPS函数，会更加晦涩，如下一个返回两个数的平方和的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">auto sum_of_squares_cps = [&amp;]&lt;class T&gt;(const T&amp; lhs, const T&amp; rhs, auto &amp;&amp; k)</span><br><span class="line">&#123;</span><br><span class="line">	return mul_cps(lhs, lhs, [&amp;](const T&amp; lhs2)</span><br><span class="line">		&#123;</span><br><span class="line">			return mul_cps(rhs, rhs, [&amp;](const T&amp; rhs2)</span><br><span class="line">			&#123;</span><br><span class="line">				return add_cps(lhs2, rhs2, k);</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这读起来十分混乱。一层一层剥开：最外层的<code>mul_cps</code>用来就计算左边的参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">return mul_cps(lhs,lhs,</span><br><span class="line">       // ...</span><br><span class="line">   );</span><br></pre></td></tr></table></figure>
+<p>接下里的一层是上一层的传递(Continuation):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[&amp;](const T&amp; lhs2)&#123;</span><br><span class="line">	return mul_cps(rhs, rhs,</span><br><span class="line">	// ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和上一层一样这次计算有边的参数。</p>
+<p>作为第一层的传递，我们接受了一个<code>lhs2</code>的参数，这是一个很聪明的技巧，作为传递参数，我们可以直接进入第一次计算的结果而不用通过存储在变量中来访问它。</p>
+<p>最后一层也用到了同样的技巧。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&amp;](const T&amp; rhs2)&#123;</span><br><span class="line">	return add_cps(lhs2, rhs2, k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们捕获了lhs2，最后计算两个的平方和<code>add_cps</code>，这就是整个<code>sum_of_squares_cps</code>的计算结果。</p>
+<p>这个函数也可以这样用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sum_of_squares_cps(3, 4, show); // prints 25</span><br></pre></td></tr></table></figure></p>
+<p>甚至可以用CPS来写递归。这更加难懂了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">std::function&lt;void(int,const std::function&lt;void(int)&gt;&amp;)&gt; factorial_cps =</span><br><span class="line">   [&amp;](int n, const std::function&lt;void(int)&gt;&amp; k)&#123;</span><br><span class="line">       eq_cps(n,0,[&amp;](bool done)&#123;</span><br><span class="line">               if (done)</span><br><span class="line">                   k(1);</span><br><span class="line">               else</span><br><span class="line">                   sub_cps(n,1,[&amp;](int m)&#123;</span><br><span class="line">                           factorial_cps(m,[&amp;](int p)&#123;</span><br><span class="line">                                   mul_cps(n,p,k);</span><br><span class="line">                               &#125;);</span><br><span class="line">                       &#125;);</span><br><span class="line">           &#125;);</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+<p><a href="http://cpp.sh/2y3kx" target="_blank" rel="external">执行结果</a></p>
+<p>总的来说，CPS编程风格是一种和传统编程方式完全不同的风格，后续会论述这些函数怎么使用。</p>
+
+          </section>
+        </article>
+        
+
+       
+        <div class="pager">
+          
+            <a class="post-prev pager-item" href="/2016/07/16/Futuretask-Java/" >
+              <strong class="article-nav-caption">Newer</strong>
+              <p class="post-nav-title">Futuretask-Java</p>
+            </a>
+          
+          
+            <a class="post-next pager-item" href="/2016/04/27/Gcc的sqrt实现/">
+              <strong class="article-nav-caption">Older</strong>
+              <p class="post-nav-title">gcc中sqrt实现</p>
+            </a>
+          
+        </div>
+        
+
+         <!-- comments -->
+        <div class="comment-section">
+  
+    
+
+    <!-- 多说评论框 start -->
+      <div class="ds-thread" data-thread-key="_posts/Continuation passing style in c++.md" data-title="Continuation passing style in C++" data-url="http://yoursite.com/2016/07/08/Continuation passing style in c++/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wayouliu"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+
+  
+
+
+</div>
+
+    </div>
+    
+</div>
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+    <p>由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动，搭载<a href="https://github.com/wayou/hexo-theme-gstyle">gstyle</a>主题</p>
+    <p>
+        &copy; 2017 John Doe
+    </p>
+</footer>
+<script src="/lib/jquery.js"></script>
+<script src="/lib/waves.js"></script>
+<script src="/lib/jquery-ui.js"></script>
+<script src="/lib/jquery.tocify.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

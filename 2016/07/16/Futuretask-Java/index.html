@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+          <head>
+        <meta charset="utf-8">
+            
+            <title>
+                Futuretask-Java | Hexo
+            </title>
+            <meta content="width=device-width, initial-scale=1" name="viewport">
+            <meta name="theme-color" content="#4184f3">
+            
+            
+            <link href="/favicon.ico" rel="icon"/>
+            
+
+            <link rel="stylesheet" href="/css/highlight.light.css">
+            <link rel="stylesheet" href="/css/prism-customize.css">
+            <link rel="stylesheet" href="/css/nav-icon.css">
+            <link rel="stylesheet" href="/css/waves.min.css">
+            <link rel="stylesheet" href="/css/jquery.tocify.css">
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/nav-indicator.css">
+            
+  
+
+  
+            </meta>
+        </meta>
+    </head>
+
+    <body>
+        <header>
+            <!-- cover image or sth. -->
+        </header>
+        <div id="main" class="m-scene">
+            
+<div class="nav-wrapper">
+
+    <div class="container">
+        <nav>
+            <div class="logo wave">
+                <a href="/" id="logo">
+                    Hexo
+                </a>
+            </div>
+            <div class="nav-toggle-icon" >
+                <div class="material-hamburger">
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                </div>
+            </div>
+            <div class="menu-wrapper">
+                <div class="nav-indicator">
+                </div>
+                <ul class="menus">
+                    
+                     
+                        <li>
+                            <a class="wave " href="/">
+                                Home
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/archives">
+                                Archive
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/about">
+                                About
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave no-smoothstate" href="/atom.xml">
+                                RSS
+                            </a>
+                        </li>
+                     
+                    
+                   
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+            <div class="container content">
+                <div class="scene_element scene_element--fadein">
+                    <div class="row">
+    <div class="main">
+        <article>
+          
+          <header class="post-header">
+          
+          </header>
+          <h1 class="post-title">Futuretask-Java</h1>
+
+          <section class="post-info">
+            <span class="post-date">2016/07/16</span>
+            
+            
+            <span class="post-tags">
+              <ul class="post-tag-list"><li class="post-tag-list-item"><a class="post-tag-list-link" href="/tags/java-parallel/">java,parallel</a></li></ul>
+            </span>
+            
+          </section>
+
+          <section class="post-content">
+            <h3 id="来学习一下Java并行库"><a href="#来学习一下Java并行库" class="headerlink" title="来学习一下Java并行库"></a>来学习一下Java并行库</h3><h4 id="java-util-concurrent-FutureTask"><a href="#java-util-concurrent-FutureTask" class="headerlink" title="java.util.concurrent.FutureTask"></a>java.util.concurrent.FutureTask</h4><hr>
+<p><code>FutureTask</code>是一个<code>Future</code>的实现,把一个大任务分为几个可以并行小块，这个效果反应在时间和吞吐量上<br>对于一个<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html" target="_blank" rel="external">Runnable</a>或者<a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html" target="_blank" rel="external">Callable</a>我们可以用他显示地创建一个<code>FutureTask</code>。<br>一个实现了<code>Runnable</code>的<code>FutureTask</code>可以提交给<code>Executor</code>。<code>FutureTask</code>也可以直接调用它的<code>run()</code>方法。一旦一个<code>FutureTask</code>进入了完成态，就会永远停留在那个状态。</p>
+<hr>
+<h4 id="1-Callable-vs-Runnable"><a href="#1-Callable-vs-Runnable" class="headerlink" title="1.Callable vs Runnable"></a>1.Callable vs Runnable</h4><p><code>FutureTask</code>的构造函数接收一个<code>Runnable</code>或者<code>Callable</code>.尽管<code>Runnable</code>和<code>Callable</code>接口都用来代表执行任务也可以被任何线程调用。但以下为他们之间的主要区别。</p>
+<ul>
+<li><code>Callable</code>需要实现<code>call()</code>方法而<code>Runnable</code>需要实现<code>run()</code>方法 </li>
+<li><code>Callable</code>可以有返回值而<code>Runnable</code>没有</li>
+<li><code>Callable</code>可以抛出<code>checked exception</code>而<code>Runnable</code>不行</li>
+</ul>
+<h2 id="下面代码来阐述一下FutureTask的用法"><a href="#下面代码来阐述一下FutureTask的用法" class="headerlink" title="下面代码来阐述一下FutureTask的用法."></a>下面代码来阐述一下<code>FutureTask</code>的用法.</h2><h4 id="2-例子"><a href="#2-例子" class="headerlink" title="2.例子"></a>2.例子</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package com.fuck;</span><br><span class="line"></span><br><span class="line">public class Calculater &#123;</span><br><span class="line">	</span><br><span class="line">	/**</span><br><span class="line">	 * Calculate number of divisible.</span><br><span class="line">	 * </span><br><span class="line">	 * Returns the amount of numbers that can be divided by the divisor without remainder.</span><br><span class="line">	 *</span><br><span class="line">	 * @param first the first</span><br><span class="line">	 * @param last the last</span><br><span class="line">	 * @param divisor the divisor</span><br><span class="line">	 * @return the int </span><br><span class="line">	 */</span><br><span class="line">	public static long calculateNumberOfDivisible(long first, long last, long divisor) &#123;</span><br><span class="line">		 </span><br><span class="line">        long amount = 0;</span><br><span class="line">        </span><br><span class="line">        for (long i = first; i &lt;= last; i++) &#123;</span><br><span class="line">            if (i % divisor == 0) &#123;</span><br><span class="line">                amount++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>calculateNumberOfDivisible()</code>方法检测一个范围内有多少数可以被<code>divisor</code>整除.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package com.fuck;</span><br><span class="line"></span><br><span class="line">import java.util.concurrent.Callable;</span><br><span class="line">public class CallableCalculater implements Callable &#123;</span><br><span class="line"></span><br><span class="line">	private long first;</span><br><span class="line">	private long last;</span><br><span class="line">	private long divisor;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * Instantiates a new callable calculater.</span><br><span class="line">	 *</span><br><span class="line">	 * @param first the first</span><br><span class="line">	 * @param last the last</span><br><span class="line">	 * @param divisor the divisor</span><br><span class="line">	 */</span><br><span class="line">	public CallableCalculater(long first, long last, long divisor) &#123;</span><br><span class="line">		this.first = first;</span><br><span class="line">		this.last = last;</span><br><span class="line">		this.divisor = divisor;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public Long call() throws Exception &#123;</span><br><span class="line"></span><br><span class="line">		return Calculater.calculateNumberOfDivisible(first, last, divisor);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>CallableCalculater</code>在一个<code>Callable</code>中包裹一下<code>calculateNumberOfDivisible()</code>以便好传给接下来的<code>FutureTask</code>.</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">package com.fuck;</span><br><span class="line"></span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.concurrent.ExecutionException;</span><br><span class="line">import java.util.concurrent.ExecutorService;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line">import java.util.concurrent.FutureTask;</span><br><span class="line"></span><br><span class="line">public class FutureTaskDemo &#123;</span><br><span class="line">	</span><br><span class="line">	// Maximum number to check</span><br><span class="line">    public static final long MAX_NUMBER = 3000000000l;</span><br><span class="line">    </span><br><span class="line">    // DIVISOR to be used in calculation</span><br><span class="line">    private static final long DIVISOR = 3;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @param args</span><br><span class="line">	 * @throws ExecutionException </span><br><span class="line">	 * @throws InterruptedException </span><br><span class="line">	 */</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		</span><br><span class="line">		// Sequential execution</span><br><span class="line">		System.out.println(&quot;Starting sequential execution ....&quot;);</span><br><span class="line">        long timeStart = System.currentTimeMillis();</span><br><span class="line">        long result = Calculater.calculateNumberOfDivisible(0, MAX_NUMBER, DIVISOR);</span><br><span class="line">        long timeEnd = System.currentTimeMillis();</span><br><span class="line">        long timeNeeded = timeEnd - timeStart;</span><br><span class="line">        System.out.println(&quot;Result         : &quot; + result + &quot; calculated in &quot; + timeNeeded + &quot; ms&quot;);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        // Parallel execution</span><br><span class="line">        System.out.println(&quot;Starting parallel execution ....&quot;);</span><br><span class="line">        long timeStartFuture = System.currentTimeMillis();</span><br><span class="line">        </span><br><span class="line">        long resultFuture = 0;</span><br><span class="line">        </span><br><span class="line">        // Create a new ExecutorService with 2 thread to execute and store the Futures</span><br><span class="line">        ExecutorService executor = Executors.newFixedThreadPool(2);</span><br><span class="line">        List&lt;FutureTask&gt; taskList = new ArrayList&lt;FutureTask&gt;();</span><br><span class="line"> </span><br><span class="line">        // Start thread for the first half of the numbers</span><br><span class="line">        FutureTask futureTask_1 = new FutureTask(new CallableCalculater(0, MAX_NUMBER / 2, DIVISOR));</span><br><span class="line">        taskList.add(futureTask_1);</span><br><span class="line">        executor.execute(futureTask_1);</span><br><span class="line"> </span><br><span class="line">        // Start thread for the second half of the numbers</span><br><span class="line">        FutureTask futureTask_2 = new FutureTask(new CallableCalculater(MAX_NUMBER / 2 + 1, MAX_NUMBER, 3));</span><br><span class="line">        taskList.add(futureTask_2);</span><br><span class="line">        executor.execute(futureTask_2);</span><br><span class="line"> </span><br><span class="line">        // Wait until all results are available and combine them at the same time</span><br><span class="line">        for (FutureTask futureTask : taskList) &#123;</span><br><span class="line">        	try &#123;</span><br><span class="line">				resultFuture += futureTask.get();</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125; catch (ExecutionException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">        </span><br><span class="line">        // Shutdown the ExecutorService </span><br><span class="line">        executor.shutdown();</span><br><span class="line">        </span><br><span class="line">        long timeEndFuture = System.currentTimeMillis();</span><br><span class="line">        long timeNeededFuture = timeEndFuture - timeStartFuture;</span><br><span class="line">        System.out.println(&quot;Result (Future): &quot; + resultFuture + &quot; calculated in &quot; + timeNeededFuture + &quot; ms&quot;);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>FutureTaskDemo</code>中以两种方式来运行<code>Calculater</code>，第一种是在一个线程中顺序执行，第二种是用<code>Futuretask</code>将任务切割成为几个并行执行我们的逻辑。我们看两种执行消耗的时间。<br>首先创建一个固定的线程池的<code>Executor</code>，和一个<code>list</code>用来启动<code>FutureTask</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   ExecutorService executor = Executors.newFixedThreadPool(2);</span><br><span class="line">List&lt;FutureTask&gt; taskList = new ArrayList&lt;FutureTask&gt;();</span><br></pre></td></tr></table></figure>
+<p>接着创建两个<code>FutureTask</code>然后添加进<code>list</code>中并执行<code>Executor</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FutureTask futureTask_1 = new FutureTask(new CallableCalculater(0, MAX_NUMBER / 2, DIVISOR));</span><br><span class="line">taskList.add(futureTask_1);</span><br><span class="line">executor.execute(futureTask_1);</span><br><span class="line"></span><br><span class="line">FutureTask futureTask_2 = new FutureTask(new CallableCalculater(MAX_NUMBER / 2 + 1, MAX_NUMBER, 3));</span><br><span class="line">taskList.add(futureTask_2);</span><br><span class="line">executor.execute(futureTask_2);</span><br></pre></td></tr></table></figure></p>
+<p>之后，我们循环调用<code>FutureTask</code>对象的<code>get()</code>来获取结果，这个方法在任务执行完后马上返回。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for (FutureTask futureTask : taskList) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                resultFuture += futureTask.get();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; catch (ExecutionException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后关闭线程池<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">executor.shutdown();</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>看看结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Starting sequential execution ....</span><br><span class="line">Result         : 1000000001 calculated in 36917 ms</span><br><span class="line">Starting parallel execution ....</span><br><span class="line">Result (Future): 1000000001 calculated in 23126 ms</span><br></pre></td></tr></table></figure></p>
+<p>是不是快了很多！</p>
+
+          </section>
+        </article>
+        
+
+       
+        <div class="pager">
+          
+            <a class="post-prev pager-item" href="/2016/07/16/BinaryTreeTraverse/" >
+              <strong class="article-nav-caption">Newer</strong>
+              <p class="post-nav-title">二叉树遍历算法总结</p>
+            </a>
+          
+          
+            <a class="post-next pager-item" href="/2016/07/08/Continuation passing style in c++/">
+              <strong class="article-nav-caption">Older</strong>
+              <p class="post-nav-title">Continuation passing style in C++</p>
+            </a>
+          
+        </div>
+        
+
+         <!-- comments -->
+        <div class="comment-section">
+  
+    
+
+    <!-- 多说评论框 start -->
+      <div class="ds-thread" data-thread-key="_posts/Futuretask-Java.md" data-title="Futuretask-Java" data-url="http://yoursite.com/2016/07/16/Futuretask-Java/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wayouliu"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+
+  
+
+
+</div>
+
+    </div>
+    
+</div>
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+    <p>由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动，搭载<a href="https://github.com/wayou/hexo-theme-gstyle">gstyle</a>主题</p>
+    <p>
+        &copy; 2017 John Doe
+    </p>
+</footer>
+<script src="/lib/jquery.js"></script>
+<script src="/lib/waves.js"></script>
+<script src="/lib/jquery-ui.js"></script>
+<script src="/lib/jquery.tocify.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

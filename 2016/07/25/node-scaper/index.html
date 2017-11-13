@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+          <head>
+        <meta charset="utf-8">
+            
+            <title>
+                node-scaper | Hexo
+            </title>
+            <meta content="width=device-width, initial-scale=1" name="viewport">
+            <meta name="theme-color" content="#4184f3">
+            
+            
+            <link href="/favicon.ico" rel="icon"/>
+            
+
+            <link rel="stylesheet" href="/css/highlight.light.css">
+            <link rel="stylesheet" href="/css/prism-customize.css">
+            <link rel="stylesheet" href="/css/nav-icon.css">
+            <link rel="stylesheet" href="/css/waves.min.css">
+            <link rel="stylesheet" href="/css/jquery.tocify.css">
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/nav-indicator.css">
+            
+  
+
+  
+            </meta>
+        </meta>
+    </head>
+
+    <body>
+        <header>
+            <!-- cover image or sth. -->
+        </header>
+        <div id="main" class="m-scene">
+            
+<div class="nav-wrapper">
+
+    <div class="container">
+        <nav>
+            <div class="logo wave">
+                <a href="/" id="logo">
+                    Hexo
+                </a>
+            </div>
+            <div class="nav-toggle-icon" >
+                <div class="material-hamburger">
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                </div>
+            </div>
+            <div class="menu-wrapper">
+                <div class="nav-indicator">
+                </div>
+                <ul class="menus">
+                    
+                     
+                        <li>
+                            <a class="wave " href="/">
+                                Home
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/archives">
+                                Archive
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/about">
+                                About
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave no-smoothstate" href="/atom.xml">
+                                RSS
+                            </a>
+                        </li>
+                     
+                    
+                   
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+            <div class="container content">
+                <div class="scene_element scene_element--fadein">
+                    <div class="row">
+    <div class="main">
+        <article>
+          
+          <header class="post-header">
+          
+          </header>
+          <h1 class="post-title">node-scaper</h1>
+
+          <section class="post-info">
+            <span class="post-date">2016/07/25</span>
+            
+            
+            <span class="post-tags">
+              <ul class="post-tag-list"><li class="post-tag-list-item"><a class="post-tag-list-link" href="/tags/nodejs-scaper/">nodejs,scaper</a></li></ul>
+            </span>
+            
+          </section>
+
+          <section class="post-content">
+            <h4 id="用node来写爬虫"><a href="#用node来写爬虫" class="headerlink" title="用node来写爬虫"></a>用node来写爬虫</h4><hr>
+<ul>
+<li>首先需要Load一个页面</li>
+<li>parse html doms</li>
+<li>获取需要的数据</li>
+</ul>
+<p>在Node.js中做到这些很容易，因为一些现存的库已经帮我们做了这些事情</p>
+<p>这次用到<a href="https://www.npmjs.com/package/request" target="_blank" rel="external">Request</a>,<a href="https://github  .com/cheeriojs/cheerio" target="_blank" rel="external">Cheerio</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">var express = require(&apos;express&apos;);</span><br><span class="line">var fs = require(&apos;fs&apos;);</span><br><span class="line">var request = require(&apos;request&apos;);</span><br><span class="line">var cheerio = require(&apos;cheerio&apos;);</span><br><span class="line">var app     = express();</span><br><span class="line"></span><br><span class="line">app.get(&apos;/scrape&apos;, function(req, res)&#123;</span><br><span class="line"></span><br><span class="line">url = &apos;https://www.rottentomatoes.com/m/shawshank_redemption/?search=shawshan&apos;;</span><br><span class="line"></span><br><span class="line">request(url, function(error, response, html)&#123;</span><br><span class="line">    if(!error)&#123;</span><br><span class="line">        var $ = cheerio.load(html);</span><br><span class="line"></span><br><span class="line">    var title, release, rating;</span><br><span class="line">    var json = &#123; title : &quot;&quot;,  reviews : &quot;&quot;&#125;;</span><br><span class="line"></span><br><span class="line">    json.title = $(&apos;title&apos;).text();</span><br><span class="line"></span><br><span class="line">    json.reviews = $(&quot;div[class=&apos;media-body&apos;]&quot;).children(&apos;p&apos;).text();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// To write to the system we will use the built in &apos;fs&apos; library.</span><br><span class="line">// In this example we will pass 3 parameters to the writeFile function</span><br><span class="line">// Parameter 1 :  output.json - this is what the created filename will be called</span><br><span class="line">// Parameter 2 :  JSON.stringify(json, null, 4) - the data to write, here we do an extra step by calling JSON.stringify to make our JSON easier to read</span><br><span class="line">// Parameter 3 :  callback function - a callback function to let us know the status of our function</span><br><span class="line"></span><br><span class="line">fs.writeFile(&apos;output.json&apos;, JSON.stringify(json, null, 4), function(err)&#123;</span><br><span class="line"></span><br><span class="line">    console.log(&apos;File successfully written! - Check your project directory for the output.json file&apos;);</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// Finally, we&apos;ll just send out a message to the browser reminding you that this app does not have a UI.</span><br><span class="line">res.send(&apos;Check your console!&apos; + json.reviews);</span><br><span class="line"></span><br><span class="line">    &#125;) ;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(&apos;3000&apos;)</span><br><span class="line">console.log(&apos;Listening on port 8081&apos;);</span><br><span class="line">exports = module.exports = app;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>···<br>    var request = require(“request”),<br>    cheerio = require(“cheerio”),<br>    url = “<a href="https://www.google.com/search?q=data+mining" target="_blank" rel="external">https://www.google.com/search?q=data+mining</a>“,</p>
+<pre><code>corpus = {},
+totalResults = 0,
+resultsDownloaded = 0;
+</code></pre><p>function callback () {<br>    resultsDownloaded++;</p>
+<pre><code>if (resultsDownloaded !== totalResults) {
+    return;
+}
+
+var words = [];
+
+// stick all words in an array
+for (prop in corpus) {
+    words.push({
+        word: prop,
+        count: corpus[prop]
+    });
+}
+
+// sort array based on how often they occur
+words.sort(function (a, b) {
+    return b.count - a.count;
+});
+
+// finally, log the first fifty most popular words
+console.log(words.slice(0, 20));
+</code></pre><p>}</p>
+<p>request(url, function (error, response, body) {<br>    if (error) {<br>        console.log(“Couldn’t get page because of error: “ + error);<br>        return;<br>    }</p>
+<pre><code>// load the body of the page into Cheerio so we can traverse the DOM
+var $ = cheerio.load(body),
+    links = $(&quot;.r a&quot;);
+
+links.each(function (i, link) {
+    // get the href attribute of each link
+    var url = $(link).attr(&quot;href&quot;);
+
+    // strip out unnecessary junk
+    url = url.replace(&quot;/url?q=&quot;, &quot;&quot;).split(&quot;&amp;&quot;)[0];
+
+    if (url.charAt(0) === &quot;/&quot;) {
+        return;
+    }
+
+    // this link counts as a result, so increment results
+    totalResults++;
+
+    // download that page
+    request(url, function (error, response, body) {
+        if (error) {
+            console.log(“Couldn’t get page because of error: “ + error);
+            return;
+        }
+
+        // load the page into cheerio
+        var $page = cheerio.load(body),
+            text = $page(&quot;body&quot;).text();
+
+        // throw away extra whitespace and non-alphanumeric characters
+        text = text.replace(/\s+/g, &quot; &quot;)
+                   .replace(/[^a-zA-Z ]/g, &quot;&quot;)
+                   .toLowerCase();
+
+        // split on spaces for a list of all the words on that page and 
+        // loop through that list
+        text.split(&quot; &quot;).forEach(function (word) {
+            // we don&apos;t want to include very short or long words, as they&apos;re 
+            // probably bad data
+            if (word.length &lt; 4 || word.length &gt; 20) {
+                return;
+            }
+
+            if (corpus[word]) {
+                // if this word is already in our &quot;corpus&quot;, our collection
+                // of terms, increase the count by one
+                corpus[word]++;
+            } else {
+                // otherwise, say that we&apos;ve found one of that word so far
+                corpus[word] = 1;
+            }
+        });
+
+        // and when our request is completed, call the callback to wrap up!
+        callback();
+    });
+});
+</code></pre><p>});<br>···</p>
+
+          </section>
+        </article>
+        
+
+       
+        <div class="pager">
+          
+            <a class="post-prev pager-item" href="/2016/08/07/springmvc-tutorial/" >
+              <strong class="article-nav-caption">Newer</strong>
+              <p class="post-nav-title">springmvc_tutorial</p>
+            </a>
+          
+          
+            <a class="post-next pager-item" href="/2016/07/16/BinaryTreeTraverse/">
+              <strong class="article-nav-caption">Older</strong>
+              <p class="post-nav-title">二叉树遍历算法总结</p>
+            </a>
+          
+        </div>
+        
+
+         <!-- comments -->
+        <div class="comment-section">
+  
+    
+
+    <!-- 多说评论框 start -->
+      <div class="ds-thread" data-thread-key="_posts/node-scaper.md" data-title="node-scaper" data-url="http://yoursite.com/2016/07/25/node-scaper/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wayouliu"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+
+  
+
+
+</div>
+
+    </div>
+    
+</div>
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+    <p>由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动，搭载<a href="https://github.com/wayou/hexo-theme-gstyle">gstyle</a>主题</p>
+    <p>
+        &copy; 2017 John Doe
+    </p>
+</footer>
+<script src="/lib/jquery.js"></script>
+<script src="/lib/waves.js"></script>
+<script src="/lib/jquery-ui.js"></script>
+<script src="/lib/jquery.tocify.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+          <head>
+        <meta charset="utf-8">
+            
+            <title>
+                springmvc_tutorial | Hexo
+            </title>
+            <meta content="width=device-width, initial-scale=1" name="viewport">
+            <meta name="theme-color" content="#4184f3">
+            
+            
+            <link href="/favicon.ico" rel="icon"/>
+            
+
+            <link rel="stylesheet" href="/css/highlight.light.css">
+            <link rel="stylesheet" href="/css/prism-customize.css">
+            <link rel="stylesheet" href="/css/nav-icon.css">
+            <link rel="stylesheet" href="/css/waves.min.css">
+            <link rel="stylesheet" href="/css/jquery.tocify.css">
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/nav-indicator.css">
+            
+  
+
+  
+            </meta>
+        </meta>
+    </head>
+
+    <body>
+        <header>
+            <!-- cover image or sth. -->
+        </header>
+        <div id="main" class="m-scene">
+            
+<div class="nav-wrapper">
+
+    <div class="container">
+        <nav>
+            <div class="logo wave">
+                <a href="/" id="logo">
+                    Hexo
+                </a>
+            </div>
+            <div class="nav-toggle-icon" >
+                <div class="material-hamburger">
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                    <span>
+                    </span>
+                </div>
+            </div>
+            <div class="menu-wrapper">
+                <div class="nav-indicator">
+                </div>
+                <ul class="menus">
+                    
+                     
+                        <li>
+                            <a class="wave " href="/">
+                                Home
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/archives">
+                                Archive
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave " href="/about">
+                                About
+                            </a>
+                        </li>
+                     
+                        <li>
+                            <a class="wave no-smoothstate" href="/atom.xml">
+                                RSS
+                            </a>
+                        </li>
+                     
+                    
+                   
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+            <div class="container content">
+                <div class="scene_element scene_element--fadein">
+                    <div class="row">
+    <div class="main">
+        <article>
+          
+          <header class="post-header">
+          
+          </header>
+          <h1 class="post-title">springmvc_tutorial</h1>
+
+          <section class="post-info">
+            <span class="post-date">2016/08/07</span>
+            
+            
+            <span class="post-tags">
+              <ul class="post-tag-list"><li class="post-tag-list-item"><a class="post-tag-list-link" href="/tags/springmvc-spring/">springmvc,spring</a></li></ul>
+            </span>
+            
+          </section>
+
+          <section class="post-content">
+            <h4 id="Springmvc框架原理"><a href="#Springmvc框架原理" class="headerlink" title="Springmvc框架原理"></a>Springmvc框架原理</h4><hr>
+<h5 id="组件和作用"><a href="#组件和作用" class="headerlink" title="组件和作用"></a>组件和作用</h5><blockquote>
+<ul>
+<li>前端控制器(DispatcherServlet)：接收请求，响应结果，相当于转发器，中央处理器。减少了其他组件之间的耦合度</li>
+<li>处理器映射器(HandlerMapping)：根据请求的url查找Handler</li>
+<li>Handler处理器：按照HandlerAdapter的要求编写</li>
+<li>处理器适配器(HandlerAdapter)：按照特定规则(HandlerAdapter要求的规则)执行Handler。</li>
+<li>视图解析器(ViewResolver)：进行视图解析，根据逻辑视图解析成真正的视图(View)</li>
+<li>视图(View)：View是一个接口实现类试吃不同的View类型（jsp,html等等）</li>
+</ul>
+</blockquote>
+<hr>
+<h5 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h5><blockquote>
+<ul>
+<li>1.发起请求到前端控制器(DispatcherServlet)</li>
+<li>2.前端控制器请求处理器映射器(HandlerMapping)查找Handler(可根据xml配置、注解进行查找)</li>
+<li>3.处理器映射器(HandlerMapping)向前端控制器返回Handler</li>
+<li>4.前端控制器调用处理器适配器(HandlerAdapter)执行Handler</li>
+<li>5.处理器适配器(HandlerAdapter)去执行Handler</li>
+<li>6.Handler执行完，给适配器返回ModelAndView(Springmvc框架的一个底层对象)</li>
+<li>7.处理器适配器(HandlerAdapter)向前端控制器返回ModelAndView</li>
+<li>8.前端控制器(DispatcherServlet)请求视图解析器(ViewResolver)进行视图解析，根据逻辑视图名解析成真正的视图(jsp)</li>
+<li>9.视图解析器(ViewResolver)向前端控制器(DispatcherServlet)返回View</li>
+<li>10.前端控制器进行视图渲染，即将模型数据(在ModelAndView对象中)填充到request域</li>
+<li>11.前端控制器向用户响应结果</li>
+</ul>
+</blockquote>
+
+          </section>
+        </article>
+        
+
+       
+        <div class="pager">
+          
+            <a class="post-prev pager-item" href="/2016/09/03/cookie和session/" >
+              <strong class="article-nav-caption">Newer</strong>
+              <p class="post-nav-title">cookie和session</p>
+            </a>
+          
+          
+            <a class="post-next pager-item" href="/2016/07/25/node-scaper/">
+              <strong class="article-nav-caption">Older</strong>
+              <p class="post-nav-title">node-scaper</p>
+            </a>
+          
+        </div>
+        
+
+         <!-- comments -->
+        <div class="comment-section">
+  
+    
+
+    <!-- 多说评论框 start -->
+      <div class="ds-thread" data-thread-key="_posts/springmvc-tutorial.md" data-title="springmvc_tutorial" data-url="http://yoursite.com/2016/08/07/springmvc-tutorial/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"wayouliu"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+
+  
+
+
+</div>
+
+    </div>
+    
+</div>
+
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+    <p>由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动，搭载<a href="https://github.com/wayou/hexo-theme-gstyle">gstyle</a>主题</p>
+    <p>
+        &copy; 2017 John Doe
+    </p>
+</footer>
+<script src="/lib/jquery.js"></script>
+<script src="/lib/waves.js"></script>
+<script src="/lib/jquery-ui.js"></script>
+<script src="/lib/jquery.tocify.js"></script>
+<script src="/js/main.js"></script>
+
+    </body>
+</html>
